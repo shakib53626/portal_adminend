@@ -1,13 +1,25 @@
 <script setup>
-
+import Layout from '@/views/common/Layout.vue'
+import GuestLayout from '@/views/common/GuestLayout.vue'
+import { useAuth } from '@/stores'
+const auth = useAuth();
 </script>
 
 <template>
-  <div style="width: 100%;">
-    <router-view></router-view>
-  </div>
-</template>
+    <div>
+        <Layout v-if="auth.isLoggedIn">
+            <section class="content">
+                <div class="container-fluid">
+                    <RouterView/>
+                </div>
+            </section>
+        </Layout>
 
-<style scoped>
+        <GuestLayout v-else>
+            <RouterView/>
+        </GuestLayout>
+    </div>
+</template>
+<style>
 
 </style>
