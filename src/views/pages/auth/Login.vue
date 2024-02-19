@@ -1,4 +1,14 @@
 <script setup>
+import { useAuth, useNotification } from '@/stores'
+import { ref } from 'vue';
+
+const auth         = useAuth();
+const notification = useNotification();
+
+const userEmail = ref();
+const password  = ref();
+
+
 
 </script>
 
@@ -16,23 +26,22 @@
 
       <div class="inputBox"> 
 
-       <input type="text" required> <i>Username</i> 
+       <input type="text" required v-model="userEmail"> <i>Username</i> 
+
+      </div> 
+
+      <div class="inputBox"> 
+        <input type="password" required v-model="password"> <i>Password</i> 
+      </div> 
+
+      <div class="links"> <div class="text-light"><input id="remember" type="checkbox"> <label for="remember">Remember Me</label></div> <a href="#">Signup</a> 
 
       </div> 
 
       <div class="inputBox"> 
 
-       <input type="password" required> <i>Password</i> 
-
-      </div> 
-
-      <div class="links"> <a href="#">Forgot Password</a> <a href="#">Signup</a> 
-
-      </div> 
-
-      <div class="inputBox"> 
-
-       <input type="submit" value="Login"> 
+       <button class="login-submit">Loading....</button> 
+       <button class="login-submit">LogIn</button> 
 
       </div> 
 
@@ -200,8 +209,11 @@ section .signin .content .form .inputBox i
   color: #0f0;
   font-weight: 600;
 }
-.signin .content .form .inputBox input[type="submit"]
+.login-submit
 {
+  border: none;
+  border-radius: 6px;
+  width: 100%;
   padding: 10px;
   background: #0f0;
   color: #000;
@@ -210,9 +222,8 @@ section .signin .content .form .inputBox i
   letter-spacing: 0.05em;
   cursor: pointer;
 }
-input[type="submit"]:active
-{
-  opacity: 0.6;
+.login-submit:hover{
+  background: rgb(2, 160, 2);
 }
 @media (max-width: 900px)
 {

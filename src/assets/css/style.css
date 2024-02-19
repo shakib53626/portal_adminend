@@ -29,6 +29,9 @@
 .text-light{
     color: #ffffff;
 }
+.text-danger{
+    color: red;
+}
 .form-group label{
     font-size: 16px;
     font-weight: 600;
@@ -68,6 +71,11 @@
 .btn-success:hover{
     background-color: #05aa0d;
     border-color: #05aa0d;
+}
+
+.is-valid{
+    border: 1px solid red;
+    border-radius: 4px;
 }
 /*==================================
 ====================================
