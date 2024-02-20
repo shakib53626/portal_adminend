@@ -9,17 +9,36 @@ const auth = useAuth();
     <div>
         <Layout v-if="auth.isLoggedIn">
             <section class="content">
-                <div class="container-fluid">
-                    <RouterView/>
-                </div>
+                <router-view v-slot="{ Component }">
+                    <transition name="fade" mode="out-in">
+                        <component :is="Component" />
+                    </transition>
+                </router-view>
             </section>
         </Layout>
 
         <GuestLayout v-else>
-            <RouterView/>
+            <router-view v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                    <component :is="Component" />
+                </transition>
+            </router-view>
         </GuestLayout>
     </div>
 </template>
 <style>
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .fade-enter-to,
+  .fade-leave-from {
+    opacity: 1;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
 
 </style>

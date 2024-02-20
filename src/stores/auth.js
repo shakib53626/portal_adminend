@@ -46,6 +46,20 @@ export const useAuth = defineStore("auth", {
             }
         },
 
+        async register(data){
+            this.loading = true;
+            try {
+                const res = await axiosInstance.post('/admin/register', data);
+                console.log(res);
+            } catch (error) {
+                if(error.response?.data){
+                    return error.response?.data;
+                }
+            }finally{
+                this.loading = false;
+            }
+        },
+
         async logout(){
             const token = useToken();
             this.logoutLoading = true;

@@ -9,18 +9,40 @@ const auth         = useAuth();
 const notification = useNotification();
 const { loading }  = storeToRefs(auth);
 
-const userPhone = ref();
-const password  = ref();
+const firstName            = ref('');
+const lastName             = ref('');
+const email                = ref('');
+const phoneNumber          = ref('');
+const nidNumber            = ref('');
+const permanentAddress     = ref('');
+const presentAddress       = ref('');
+const gender               = ref('');
+const password             = ref('');
+const passwordConfirmation = ref('');
+const errors               = ref('');
 
 const submit = async() =>{
-  const res = await auth.login({
-    phone   : userPhone.value,
-    password: password.value,
+  const res = await auth.register({
+    first_name           : firstName.value,
+    last_name            : lastName.value,
+    email                : email.value,
+    phone                : phoneNumber.value,
+    national_id_number   : nidNumber.value,
+    permanent_address    : permanentAddress.value,
+    present_address      : presentAddress.value,
+    gender               : gender.value,
+    password             : password.value,
+    password_confirmation: passwordConfirmation.value,
   })
-  if(res?.token){
-    router.push({name: 'dashboard'});
-    notification.Success("Login Successfully");
+  if(res.status){
+
+  }else{
+    errors.value = res?.errors;
   }
+  // if(res?.token){
+  //   router.push({name: 'dashboard'});
+  //   notification.Success("Login Successfully");
+  // }
 }
 
 </script>
@@ -33,30 +55,103 @@ const submit = async() =>{
 
     <div class="content"> 
 
-     <div class="registration-title">
+     <div class="registration-title pb-2">
         <h2 class="register-logo"><img src="@/assets/images/logo/servicekey-logo.png" alt=""></h2>
-        <h3>Registration Form</h3>
+        <router-link :to="{name : 'login'}" class="login-btn">Login</router-link> 
      </div>
+     <div class="text-center text-light"><h4>Registration Form</h4></div>
 
      <div class="form"> 
 
-      <div class="inputBox">
-       <input type="text" required v-model="firstName"> <i>First Name</i> 
-      </div> 
-
-      <div class="inputBox"> 
-        <input type="text" required v-model="lastName"> <i>Last Name</i> 
-      </div> 
-
-      <div class="links"> <div class="text-light"><input id="remember" type="checkbox"> <label for="remember">Remember Me</label></div>
-      <router-link :to="{name : 'login'}">Login</router-link> 
-
-      </div> 
+      <div class="row">
+        <div class="col-md-6">
+          <div class="inputBox p-2">
+           <input type="text" required v-model="firstName"> <i style="margin-left:10px;">First Name</i> 
+          </div>
+          <div v-if="errors?.first_name">
+            <p v-for="(error, index) in errors?.first_name" :key="index" class="text-danger">{{ error }}</p>
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="text" required v-model="lastName"> <i style="margin-left:10px;">Last Name</i> 
+          </div> 
+          <div v-if="errors?.last_name">
+            <p v-for="(error, index) in errors?.last_name" :key="index" class="text-danger">{{ error }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="email" required v-model="email"> <i style="margin-left:10px;">Email</i> 
+          </div> 
+          <div v-if="errors?.email">
+            <p v-for="(error, index) in errors?.email" :key="index" class="text-danger">{{ error }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="text" required v-model="phoneNumber"> <i style="margin-left:10px;">Phone Number</i> 
+          </div> 
+          <div v-if="errors?.phone">
+            <p v-for="(error, index) in errors?.phone" :key="index" class="text-danger">{{ error }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="text" required v-model="nidNumber"> <i style="margin-left:10px;">National Id Number</i> 
+          </div>
+          <div v-if="errors?.national_id_number">
+            <p v-for="(error, index) in errors?.national_id_number" :key="index" class="text-danger">{{ error }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="text" required v-model="permanentAddress"> <i style="margin-left:10px;">Permanent Address</i> 
+          </div>
+          <div v-if="errors?.permanent_address">
+            <p v-for="(error, index) in errors?.permanent_address" :key="index" class="text-danger">{{ error }}</p>
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="text" required v-model="presentAddress"> <i style="margin-left:10px;">Present Address</i> 
+          </div> 
+          <div v-if="errors?.present_address">
+            <p v-for="(error, index) in errors?.present_address" :key="index" class="text-danger">{{ error }}</p>
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <select id="" class="form-control" v-model="gender">
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="others">Others</option>
+            </select>
+          </div> 
+          <div v-if="errors?.gender">
+            <p v-for="(error, index) in errors?.gender" :key="index" class="text-danger">{{ error }}</p>
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="password" required v-model="password"> <i style="margin-left:10px;">Password</i> 
+          </div> 
+          <div v-if="errors?.password">
+            <p v-for="(error, index) in errors?.password" :key="index" class="text-danger">{{ error }}</p>
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div class="inputBox p-2"> 
+            <input type="password" required v-model="passwordConfirmation"> <i style="margin-left:10px;">Confirm Password</i>
+          </div> 
+        </div>
+      </div>
 
       <div class="inputBox"> 
 
        <button class="login-submit" v-if="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading....</button> 
-       <button class="login-submit" @click.prevent="submit" v-else>LogIn</button> 
+       <button class="login-submit" @click.prevent="submit" v-else>Submit Form</button> 
 
       </div> 
 
@@ -81,11 +176,14 @@ const submit = async() =>{
   width: 100%;
   border-bottom: 3px solid #0f0;
 }
-.registration-title h3{
+.registration-title h5{
   color: #fff;
-  margin-bottom: 5px;
 }
-
+.login-btn{
+  font-size: 20px;
+  color: #0f0;
+  text-decoration: none;
+}
 
 *
 {
@@ -193,7 +291,7 @@ section .signin .content .form .inputBox
   position: relative;
   width: 100%;
 }
-section .signin .content .form .inputBox input 
+section .signin .content .form .inputBox input
 {
   position: relative;
   width: 100%;
@@ -222,6 +320,13 @@ section .signin .content .form .inputBox i
   transform: translateY(-7.5px);
   font-size: 0.8em;
   color: #fff;
+}
+.inputBox select{
+  background-color: #333;
+  color: #aaa;
+  padding: 16px 10px;
+  border: none;
+  border-radius: 4px;
 }
 .signin .content .form .links 
 {
