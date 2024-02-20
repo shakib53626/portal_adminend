@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuth, useToken } from "@/stores";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_APP_URL + "/api",
+  baseURL: import.meta.env.VITE_APP_URL + "/api/v1",
 });
 
 axiosInstance.interceptors.request.use(

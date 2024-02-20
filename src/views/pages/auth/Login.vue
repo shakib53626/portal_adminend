@@ -1,14 +1,27 @@
 <script setup>
 import { useAuth, useNotification } from '@/stores'
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router       = useRouter()
 const auth         = useAuth();
 const notification = useNotification();
+const { loading }  = storeToRefs(auth);
 
-const userEmail = ref();
+const userPhone = ref();
 const password  = ref();
 
-
+const submit = async() =>{
+  const res = await auth.login({
+    phone   : userPhone.value,
+    password: password.value,
+  })
+  if(res?.token){
+    router.push({name: 'dashboard'});
+    notification.Success("Login Successfully");
+  }
+}
 
 </script>
 
@@ -26,7 +39,7 @@ const password  = ref();
 
       <div class="inputBox"> 
 
-       <input type="text" required v-model="userEmail"> <i>Username</i> 
+       <input type="text" required v-model="userPhone"> <i>Phone Number</i> 
 
       </div> 
 
@@ -40,8 +53,8 @@ const password  = ref();
 
       <div class="inputBox"> 
 
-       <button class="login-submit">Loading....</button> 
-       <button class="login-submit">LogIn</button> 
+       <button class="login-submit" v-if="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading....</button> 
+       <button class="login-submit" @click.prevent="submit" v-else>LogIn</button> 
 
       </div> 
 

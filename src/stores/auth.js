@@ -7,6 +7,7 @@ export const useAuth = defineStore("auth", {
         user          : {},
         isLoggedIn    : false,
         logoutLoading : false,
+        loading       : false,
         authPermission: {},
      }),
 
@@ -23,22 +24,25 @@ export const useAuth = defineStore("auth", {
 
      actions:{
         async login(data){
+            this.loading = true;
             const token = useToken();
             try {
                 const res = await axiosInstance.post('/admin/login', data);
+                console.log(res);
                 if(res.status === 200){
-                    this.user = res.data?.result?.user
-                    token.setToken(res.data?.result?.token)
+                    this.user = res.data?.data;
+                    token.setToken(res.data?.meta?.token)
                     this.isLoggedIn = true;
-                    this.authenticateUserPermission();
-                    return res.data?.result;
-                }else{
-                    return res.data?.message;
+                    // this.authenticateUserPermission();
+                    return res.data?.meta;
                 }
             } catch (error) {
-                if(error.response.data){
-                    throw(error.response.data.errors)
+                if(error?.response?.data){
+                    console.log(error?.response?.data);
+                    throw(error?.response?.data)
                 }
+            }finally{
+                this.loading = false;
             }
         },
 
