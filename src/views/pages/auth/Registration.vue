@@ -29,26 +29,27 @@ const submit = async() =>{
     <div>
         <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
 
-   <div class="signin"> 
+   <div class="signin" style="padding-top:15px;"> 
 
     <div class="content"> 
 
-     <h2 class="login-logo"><img src="@/assets/images/logo/servicekey-logo.png" alt=""></h2> 
+     <div class="registration-title">
+        <h2 class="register-logo"><img src="@/assets/images/logo/servicekey-logo.png" alt=""></h2>
+        <h3>Registration Form</h3>
+     </div>
 
      <div class="form"> 
 
-      <div class="inputBox"> 
-
-       <input type="text" required v-model="userPhone"> <i>Phone Number</i> 
-
+      <div class="inputBox">
+       <input type="text" required v-model="firstName"> <i>First Name</i> 
       </div> 
 
       <div class="inputBox"> 
-        <input type="password" required v-model="password"> <i>Password</i> 
+        <input type="text" required v-model="lastName"> <i>Last Name</i> 
       </div> 
 
       <div class="links"> <div class="text-light"><input id="remember" type="checkbox"> <label for="remember">Remember Me</label></div>
-      <router-link :to="{name : 'register'}">Signup</router-link> 
+      <router-link :to="{name : 'login'}">Login</router-link> 
 
       </div> 
 
@@ -70,6 +71,22 @@ const submit = async() =>{
 </template>
 
 <style scoped>
+.register-logo img{
+  max-width: 150px;
+}
+.registration-title{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
+  border-bottom: 3px solid #0f0;
+}
+.registration-title h3{
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+
 *
 {
   margin: 0;
@@ -137,7 +154,7 @@ section span:hover
 section .signin
 {
   position: absolute;
-  width: 400px;
+  width: 800px;
   background: #222;  
   z-index: 1000;
   display: flex;

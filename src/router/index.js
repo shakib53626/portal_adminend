@@ -1,7 +1,9 @@
 import NProgress from 'nprogress'
 import {createRouter, createWebHistory} from 'vue-router'
 import { useAuth } from '@/stores'
+
 import Login from '@/views/pages/auth/Login.vue'
+import Register from '@/views/pages/auth/Registration.vue'
 import Index from '@/views/pages/Index.vue'
 
 const routes =[	
@@ -15,6 +17,12 @@ const routes =[
       path: '/login', 
       name:'login', 
       component: Login,
+      meta     : { title: 'Login', guest : true }
+    },
+    { 
+      path: '/register', 
+      name:'register', 
+      component: Register,
       meta     : { title: 'Login', guest : true }
     },
   ];
