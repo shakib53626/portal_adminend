@@ -11,6 +11,7 @@ const { loading }  = storeToRefs(auth);
 
 const userPhone = ref();
 const password  = ref();
+const errors    = ref();
 
 const submit = async() =>{
   const res = await auth.login({
@@ -20,6 +21,10 @@ const submit = async() =>{
   if(res?.token){
     router.push({name: 'dashboard'});
     notification.Success("Login Successfully");
+  }else if(res.status == 400){
+    router.push({name : 'register', params : {isSubmit : true}});
+  }else{
+    errors.value = res.errors;
   }
 }
 
@@ -38,14 +43,18 @@ const submit = async() =>{
      <div class="form"> 
 
       <div class="inputBox"> 
-
-       <input type="text" required v-model="userPhone"> <i>Phone Number</i> 
-
+        <input type="text" required v-model="userPhone"> <i>Phone Number</i> 
       </div> 
-
+      
       <div class="inputBox"> 
         <input type="password" required v-model="password"> <i>Password</i> 
       </div> 
+      <div v-if="errors?.phone">
+        <p v-for="(error, index) in errors?.phone" :key="index" class="text-danger">{{ error }}</p>
+      </div>
+      <div v-if="errors?.password">
+          <p v-for="(error, index) in errors?.password" :key="index" class="text-danger">{{ error }}</p>
+        </div>
 
       <div class="links"> <div class="text-light"><input id="remember" type="checkbox"> <label for="remember">Remember Me</label></div>
       <router-link :to="{name : 'register'}">Signup</router-link> 

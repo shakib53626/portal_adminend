@@ -20,7 +20,7 @@ const gender               = ref('');
 const password             = ref('');
 const passwordConfirmation = ref('');
 const errors               = ref('');
-
+const isSubmit             = ref(false);
 const submit = async() =>{
   const res = await auth.register({
     first_name           : firstName.value,
@@ -34,8 +34,8 @@ const submit = async() =>{
     password             : password.value,
     password_confirmation: passwordConfirmation.value,
   })
-  if(res.status){
-
+  if(res?.success){
+    isSubmit.value = true;
   }else{
     errors.value = res?.errors;
   }
@@ -59,9 +59,10 @@ const submit = async() =>{
         <h2 class="register-logo"><img src="@/assets/images/logo/servicekey-logo.png" alt=""></h2>
         <router-link :to="{name : 'login'}" class="login-btn">Login</router-link> 
      </div>
-     <div class="text-center text-light"><h4>Registration Form</h4></div>
+     <div class="text-center" style="color: #0f0;" v-if="isSubmit"><h4>Your application has been successfully submited. Please wait for superadmins approval.</h4></div>
+     <div class="text-center text-light" v-else><h4>Registration Form</h4></div>
 
-     <div class="form"> 
+     <div class="form" v-if="!isSubmit"> 
 
       <div class="row">
         <div class="col-md-6">

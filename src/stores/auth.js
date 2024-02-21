@@ -29,17 +29,18 @@ export const useAuth = defineStore("auth", {
             try {
                 const res = await axiosInstance.post('/admin/login', data);
                 console.log(res);
-                if(res.status === 200){
-                    this.user = res.data?.data;
-                    token.setToken(res.data?.meta?.token)
+                if(res.data?.success){
+                    this.user = res.data?.user;
+                    token.setToken(res.data?.token)
                     this.isLoggedIn = true;
                     // this.authenticateUserPermission();
-                    return res.data?.meta;
+                    return res.data;
+                }else{
+                    return res;
                 }
             } catch (error) {
                 if(error?.response?.data){
-                    console.log(error?.response?.data);
-                    throw(error?.response?.data)
+                    return error?.response?.data;
                 }
             }finally{
                 this.loading = false;
@@ -50,7 +51,9 @@ export const useAuth = defineStore("auth", {
             this.loading = true;
             try {
                 const res = await axiosInstance.post('/admin/register', data);
-                console.log(res);
+                if(res.data?.success){
+                    return res.data;
+                }
             } catch (error) {
                 if(error.response?.data){
                     return error.response?.data;
