@@ -28,15 +28,12 @@ export const useAuth = defineStore("auth", {
             const token = useToken();
             try {
                 const res = await axiosInstance.post('/admin/login', data);
-                console.log(res);
                 if(res.data?.success){
                     this.user = res.data?.user;
                     token.setToken(res.data?.token)
                     this.isLoggedIn = true;
                     // this.authenticateUserPermission();
                     return res.data;
-                }else{
-                    return res;
                 }
             } catch (error) {
                 if(error?.response?.data){
@@ -51,6 +48,22 @@ export const useAuth = defineStore("auth", {
             this.loading = true;
             try {
                 const res = await axiosInstance.post('/admin/register', data);
+                if(res.data?.success){
+                    return res.data;
+                }
+            } catch (error) {
+                if(error.response?.data){
+                    return error.response?.data;
+                }
+            }finally{
+                this.loading = false;
+            }
+        },
+
+        async resetPassword(data){
+            this.loading = true;
+            try {
+                const res = await axiosInstance.post('/admin/reset-password', data);
                 if(res.data?.success){
                     return res.data;
                 }

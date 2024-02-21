@@ -4,6 +4,7 @@ import { useAuth } from '@/stores'
 
 import Login from '@/views/pages/auth/Login.vue'
 import Register from '@/views/pages/auth/Registration.vue'
+import ResetPassword from '@/views/pages/auth/ResetPassword.vue'
 import Index from '@/views/pages/Index.vue'
 
 const routes =[	
@@ -23,7 +24,13 @@ const routes =[
       path: '/register', 
       name:'register', 
       component: Register,
-      meta     : { title: 'Login', guest : true }
+      meta     : { title: 'Registration Form', guest : true }
+    },
+    { 
+      path: '/reset-password', 
+      name:'reset-password', 
+      component: ResetPassword,
+      meta     : { title: 'Reset Your Password', guest : true }
     },
   ];
 

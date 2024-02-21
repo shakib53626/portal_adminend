@@ -2,9 +2,10 @@
 import { useAuth, useNotification } from '@/stores'
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-const router       = useRouter()
+const router       = useRouter();
+const route        = useRoute();
 const auth         = useAuth();
 const notification = useNotification();
 const { loading }  = storeToRefs(auth);
@@ -20,7 +21,9 @@ const gender               = ref('');
 const password             = ref('');
 const passwordConfirmation = ref('');
 const errors               = ref('');
-const isSubmit             = ref(false);
+const isSubmit             = ref(route.query?.is_submit ? true : false);
+
+
 const submit = async() =>{
   const res = await auth.register({
     first_name           : firstName.value,
@@ -59,7 +62,7 @@ const submit = async() =>{
         <h2 class="register-logo"><img src="@/assets/images/logo/servicekey-logo.png" alt=""></h2>
         <router-link :to="{name : 'login'}" class="login-btn">Login</router-link> 
      </div>
-     <div class="text-center" style="color: #0f0;" v-if="isSubmit"><h4>Your application has been successfully submited. Please wait for superadmins approval.</h4></div>
+     <div class="text-center" style="color: #1C5990;" v-if="isSubmit"><h4>Your application has been successfully submited. Please wait for superadmins approval.</h4></div>
      <div class="text-center text-light" v-else><h4>Registration Form</h4></div>
 
      <div class="form" v-if="!isSubmit"> 
@@ -175,14 +178,14 @@ const submit = async() =>{
   justify-content: space-between;
   align-items: end;
   width: 100%;
-  border-bottom: 3px solid #0f0;
+  border-bottom: 3px solid #1C5990;
 }
 .registration-title h5{
   color: #fff;
 }
 .login-btn{
   font-size: 20px;
-  color: #0f0;
+  color: #1C5990;
   text-decoration: none;
 }
 
@@ -220,7 +223,7 @@ section::before
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(#000,#0f0,#000);
+  background: linear-gradient(#000,#1C5990,#000);
   animation: animate 5s linear infinite;
 }
 @keyframes animate 
@@ -246,7 +249,7 @@ section span
 }
 section span:hover 
 {
-  background: #0f0;
+  background: #1C5990;
   transition: 0s;
 }
 
@@ -262,7 +265,7 @@ section .signin
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 15px 35px rgba(0,0,0,9);
-  border-top: 5px solid #0F0;
+  border-top: 5px solid #81B7D6;
 }
 section .signin .content 
 {
@@ -277,7 +280,7 @@ section .signin .content
 section .signin .content h2 
 {
   font-size: 2em;
-  color: #0f0;
+  color: #1C5990;
   text-transform: uppercase;
 }
 section .signin .content .form 
@@ -343,7 +346,7 @@ section .signin .content .form .inputBox i
 }
 .signin .content .form .links a:nth-child(2)
 {
-  color: #0f0;
+  color: #1C5990;
   font-weight: 600;
 }
 .login-submit
@@ -352,15 +355,15 @@ section .signin .content .form .inputBox i
   border-radius: 6px;
   width: 100%;
   padding: 10px;
-  background: #0f0;
-  color: #000;
+  background: #1C5990;
+  color: #fff;
   font-weight: 600;
   font-size: 1.35em;
   letter-spacing: 0.05em;
   cursor: pointer;
 }
 .login-submit:hover{
-  background: rgb(2, 160, 2);
+  background: #1a6bb3;
 }
 @media (max-width: 900px)
 {

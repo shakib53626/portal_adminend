@@ -9,25 +9,24 @@ const auth         = useAuth();
 const notification = useNotification();
 const { loading }  = storeToRefs(auth);
 
-const userPhone = ref();
-const password  = ref();
+const userMailPhone   = ref();
+const password        = ref();
+const confirmPassword = ref();
 const errors    = ref();
 
 const submit = async() =>{
-  const res = await auth.login({
-    phone   : userPhone.value,
-    password: password.value,
-  })
-  if(res?.token){
-    router.push({name: 'dashboard'});
-    notification.Success("Login Successfully");
+  const res = await auth.resetPassword({
+    email_phone          : userMailPhone.value,
+    password             : password.value,
+    password_confirmation: confirmPassword.value,
+  });
+  if(res.success){
+    router.push({name:'login'});
+    notification.Success('Change Password Request Send Success');
   }else{
-    if(res?.status === 403){
-      router.push({name : 'register', query: {is_submit : true}}); 
-    }else{
-      errors.value = res.errors;
-    }
+    errors.value = res.errors;
   }
+
 }
 
 </script>
@@ -40,34 +39,38 @@ const submit = async() =>{
 
     <div class="content"> 
 
-     <h2 class="login-logo"><img src="@/assets/images/logo/servicekey-logo.png" alt=""></h2> 
+     <h2 class="login-logo">Reset Password</h2> 
 
      <div class="form"> 
 
       <div class="inputBox"> 
-        <input type="text" required v-model="userPhone"> <i>Phone Number</i> 
+        <input type="text" required v-model="userMailPhone"> <i>Email or Phone</i> 
       </div> 
       
       <div class="inputBox"> 
-        <input type="password" required v-model="password"> <i>Password</i> 
+        <input type="password" required v-model="password"> <i>New Password</i> 
       </div> 
-      <div v-if="errors?.phone">
-        <p v-for="(error, index) in errors?.phone" :key="index" class="text-danger">{{ error }}</p>
-      </div>
-      <div v-if="errors?.password">
+      <div class="inputBox"> 
+        <input type="password" required v-model="confirmPassword"> <i>Confirm Password</i> 
+      </div> 
+        <div v-if="errors?.email_phone">
+          <p v-for="(error, index) in errors?.phone" :key="index" class="text-danger">{{ error }}</p>
+        </div>
+        <div v-if="errors?.password">
           <p v-for="(error, index) in errors?.password" :key="index" class="text-danger">{{ error }}</p>
         </div>
 
-      <div class="links"> <div class="text-light"><input id="remember" type="checkbox"> <label for="remember">Remember Me</label></div>
-      <router-link :to="{name : 'register'}">Signup</router-link> 
+      <div class="links"> <div class="text-light"></div>
+        <router-link :to="{name : 'login'}">LogIn</router-link> 
 
       </div> 
 
       <div class="inputBox"> 
-        <button class="login-submit" v-if="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading....</button> 
-        <button class="login-submit" @click.prevent="submit" v-else>LogIn</button> 
+
+       <button class="login-submit" v-if="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading....</button> 
+       <button class="login-submit" @click.prevent="submit" v-else>Reset Password</button> 
+
       </div> 
-      <p class="text-center"><router-link class="text-light reset-password" :to="{name:'reset-password'}">Reset my password?</router-link></p>
 
      </div> 
 
@@ -80,9 +83,6 @@ const submit = async() =>{
 </template>
 
 <style scoped>
-.reset-password:hover{
-  color: #1C5990 !important;
-}
 *
 {
   margin: 0;
@@ -243,18 +243,14 @@ section .signin .content .form .inputBox i
   width: 100%;
   padding: 10px;
   background: #1C5990;
-  color: #000;
+  color: #fff;
   font-weight: 600;
   font-size: 1.35em;
   letter-spacing: 0.05em;
   cursor: pointer;
 }
-.login-submit{
-  color: #fff;
-}
 .login-submit:hover{
-  background: #136fbe;
-  color: #fff;
+  background: #1a6cb4;
 }
 @media (max-width: 900px)
 {
