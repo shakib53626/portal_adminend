@@ -53,7 +53,8 @@ const submit = async () => {
                 <input type="password" class="form-control" placeholder="Confirm Password" v-model="confirmPassword">
             </div>
             <div>
-                <button class="btn change-password" @click="submit">Change Password</button>
+                <button class="btn change-password" v-if="auth.loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading....</button>
+                <button class="btn change-password" @click="submit" v-else>Change Password</button>
             </div>
         </div>
     </div>
