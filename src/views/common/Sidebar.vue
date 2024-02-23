@@ -5,8 +5,10 @@ const theme = useThemeSetting();
 
 <template>
     <div class="sidebar" :class="{'is-collops-sidebar' : theme.isCollops}">
-        <div class="sidebar-logo" v-if="theme.isCollops"><img src="@/assets/images/logo/light-favicon.png" width="32" alt=""></div>
-        <div class="sidebar-logo" v-else><img src="@/assets/images/logo/logo.png" alt=""></div>
+        <router-link :to="{name:'dashboard'}">
+            <div class="sidebar-logo" v-if="theme.isCollops"><img src="@/assets/images/logo/light-favicon.png" width="32" alt=""></div>
+            <div class="sidebar-logo" v-else><img src="@/assets/images/logo/logo.png" alt=""></div>
+        </router-link>
     </div>
 </template>
 

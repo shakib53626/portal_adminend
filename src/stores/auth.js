@@ -76,6 +76,24 @@ export const useAuth = defineStore("auth", {
             }
         },
 
+        async changePassword(data){     
+            this.loading = true;
+            try {
+                const res = await axiosInstance.post('/admin/change-password', data);
+                if(res.data?.success){
+                    return res.data;
+                }else{
+                    return res.data;
+                }
+            } catch (error) {
+                if(error.response.data){
+                    return error.response?.data;
+                }
+            }finally{
+                this.loading = false;
+            }
+        },
+
         async logout(){
             const token = useToken();
             this.logoutLoading = true;

@@ -40,7 +40,7 @@ const logout = async() =>{
                                 </div>
                             </li>
                             <li><a href=""><i class="fa-solid fa-user"></i> My Account</a></li>
-                            <li><a href=""><i class="fa-solid fa-key"></i> Change Password</a></li>
+                            <li><router-link :to="{name:'change-password'}"><i class="fa-solid fa-key"></i> Change Password</router-link></li>
                             <li v-if="auth.logoutLoading"><a><i class="fa-solid fa-spinner fa-spin"></i> Loading....</a></li>
                             <li v-else><a @click="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
                         </ul>

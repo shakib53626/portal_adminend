@@ -5,6 +5,7 @@ import { useAuth } from '@/stores'
 import Login from '@/views/pages/auth/Login.vue'
 import Register from '@/views/pages/auth/Registration.vue'
 import ResetPassword from '@/views/pages/auth/ResetPassword.vue'
+import ChangePassword from '@/views/pages/auth/ChangePassword.vue'
 import Index from '@/views/pages/Index.vue'
 
 const routes =[	
@@ -31,6 +32,12 @@ const routes =[
       name:'reset-password', 
       component: ResetPassword,
       meta     : { title: 'Reset Your Password', guest : true }
+    },
+    { 
+      path: '/change-password', 
+      name: 'change-password', 
+      component: ChangePassword,
+      meta     : { title: 'Change Your Password', requiresAuth : true }
     },
   ];
 
