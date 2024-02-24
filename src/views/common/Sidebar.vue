@@ -1,9 +1,18 @@
 <script setup>
 import { useThemeSetting } from '@/stores'
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-const theme = useThemeSetting();
 
+const theme = useThemeSetting();
 const route = useRoute();
+const isOpenSubMenu = ref('');
+const openToggle = (menuName) =>{
+    if(isOpenSubMenu.value == menuName){
+        isOpenSubMenu.value = '';
+    }else{
+        isOpenSubMenu.value = menuName;
+    }
+}
 </script>
 
 <template>
@@ -17,38 +26,38 @@ const route = useRoute();
                 <li>
                     <router-link :to="{name:'dashboard'}" :class="{ 'active': route.name == 'dashboard' }">
                         <i class="fa-solid fa-chart-bar nav-icon"></i> 
-                        <span class="nav-title">Dashboard</span>
+                        <span class="nav-title" v-if="!theme.isCollops">Dashboard</span>
                     </router-link>
                 </li>
                 <li class="sub-menu-dropdown">
-                    <div class="dropdown-title dropdown-open">
+                    <div class="dropdown-title mb-3" :class="{ 'dropdown-open': isOpenSubMenu == 'acl' }" @click="openToggle('acl')">
                         <i class="fa-solid fa-people-roof nav-icon"></i> 
-                        <span class="nav-title">ACL Management</span>
+                        <span class="nav-title" v-if="!theme.isCollops">ACL Management</span>
                         <i class="fa-solid fa-angle-right toggle-icon"></i>
                     </div>
-                    <ul>
+                    <ul v-show="isOpenSubMenu=='acl'">
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
-                                <span class="nav-title">Users</span>
+                                <span class="nav-title" v-if="!theme.isCollops">Users</span>
                             </router-link>
                         </li>
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
-                                <span class="nav-title">User Roles</span>
+                                <span class="nav-title" v-if="!theme.isCollops">User Roles</span>
                             </router-link>
                         </li>
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
-                                <span class="nav-title">Approved Request</span>
+                                <span class="nav-title" v-if="!theme.isCollops">Approved Request</span>
                             </router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'dashboard' }">
+                            <router-link :to="{ name: 'reset-password-approval'}" :class="{'active' : route.name=='reset-password-approval'}">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
-                                <span class="nav-title">CP Confirmation</span>
+                                <span class="nav-title" v-if="!theme.isCollops">RP Confirmation</span>
                             </router-link>
                         </li>
                     </ul>
@@ -104,12 +113,14 @@ a{
     padding: 5px 12px;
     width: 100%;
     position: relative;
+    cursor: pointer;
 }
 .toggle-icon{
     position: absolute;
     right: 10px;
-    top: 13px;
+    top: 10px;
     color: #fff;
+    transition: 0.5s;
 }
 .sidebar-menu ul li a:hover,
 .sidebar-menu ul li a.active{
@@ -139,13 +150,11 @@ a{
     font-size: 18px;
     padding-left: 10px;
 }
-.dropdown-open{
+.dropdown-open,
+.dropdown-title:hover   {
     background-color: #104a7e;
     border-radius: 8px;
-}
-.dropdown-title:hover{
-    background-color: #104a7e;
-    border-radius: 8px;
+    box-shadow: 0 7px 14px 0 rgba(1, 21, 65, 0.425);
 }
 .sub-menu-dropdown ul{
     margin: 0;
@@ -155,5 +164,9 @@ a{
 .sub-menu-dropdown .nav-icon, 
 .sub-menu-dropdown .nav-title{
     font-size: 16px;
+}
+.dropdown-open .toggle-icon {
+  transform: rotate(90deg);
+  transition: 0.5s;
 }
 </style>

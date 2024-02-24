@@ -6,6 +6,7 @@ import Login from '@/views/pages/auth/Login.vue'
 import Register from '@/views/pages/auth/Registration.vue'
 import ResetPassword from '@/views/pages/auth/ResetPassword.vue'
 import ChangePassword from '@/views/pages/auth/ChangePassword.vue'
+import RPApproval from '@/views/pages/auth/ResetPasswordApproval.vue'
 import Index from '@/views/pages/Index.vue'
 
 const routes =[	
@@ -38,6 +39,12 @@ const routes =[
       name: 'change-password', 
       component: ChangePassword,
       meta     : { title: 'Change Your Password', requiresAuth : true }
+    },
+    { 
+      path: '/reset-password-approval', 
+      name: 'reset-password-approval', 
+      component: RPApproval,
+      meta     : { title: 'Reset Password Request List', requiresAuth : true }
     },
   ];
 

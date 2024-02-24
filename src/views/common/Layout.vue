@@ -22,7 +22,7 @@ const theme = useThemeSetting();
 <style scoped>
 .content-wrapper{
     margin-left: 270px;
-    margin-top: 60px;
+    margin-top: 70px;
     transition: 0.5s;
 }
 .is-collops{
