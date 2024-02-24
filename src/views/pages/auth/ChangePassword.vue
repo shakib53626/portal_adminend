@@ -87,10 +87,13 @@ const submit = async () => {
 .btn.change-password {
     width: 100%;
     background-color: #1C5990;
+    box-shadow: 0 7px 14px 0 rgba(5, 50, 148, 0.425);
     color: #fff;
     border: none;
 }
 
 .btn.change-password:hover {
-    background-color: #1670be;
-}</style>
+    /* background-color: #1670be; */
+    box-shadow: none;
+}
+</style>
