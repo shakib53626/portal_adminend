@@ -30,12 +30,12 @@ const openToggle = (menuName) =>{
                     </router-link>
                 </li>
                 <li class="sub-menu-dropdown">
-                    <div class="dropdown-title mb-3" :class="{ 'dropdown-open': isOpenSubMenu == 'acl' }" @click="openToggle('acl')">
+                    <div class="dropdown-title mb-3" :class="{ 'dropdown-open': isOpenSubMenu == 'acl' || route.name == 'reset-password-approval' }" @click="openToggle('acl')">
                         <i class="fa-solid fa-people-roof nav-icon"></i> 
                         <span class="nav-title" v-if="!theme.isCollops">ACL Management</span>
                         <i class="fa-solid fa-angle-right toggle-icon"></i>
                     </div>
-                    <ul v-show="isOpenSubMenu=='acl'">
+                    <ul v-show="isOpenSubMenu=='acl' || route.name == 'reset-password-approval'">
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>

@@ -9,6 +9,8 @@ export const useAuth = defineStore("auth", {
         logoutLoading : false,
         loading       : false,
         authPermission: {},
+        approveLoding : false,
+        removeLoding  : false,
      }),
 
      persist:['user', 'isLoggedIn', 'authPermission'],
@@ -91,6 +93,33 @@ export const useAuth = defineStore("auth", {
                 }
             }finally{
                 this.loading = false;
+            }
+        },
+
+        async getResetPasswordList(){
+            try {
+                const res = await axiosInstance.get('/admin/reset-password-request-list');
+                if(res.data?.success){
+                    return res.data;
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async removeOrApprovePassword(approveId, removeId){
+            this.removeLoding  = removeId;
+            this.approveLoding = approveId;
+            try {
+                const res = await axiosInstance.post('/admin/reset-password-approve', {
+                    remove_id : removeId,
+                    approve_id: approveId,
+                });
+                if(res.data?.success){
+                    return res.data;
+                }
+            } catch (error) {
+                console.log(error);
             }
         },
 

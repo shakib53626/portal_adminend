@@ -79,3 +79,17 @@
 .login-logo img {
     max-width: 100%;
 }
+.swal2-actions .swal2-confirm {
+    border: 0 !important;
+    border-radius: 5px !important;
+    background: initial;
+    background-color: initial !important;
+    background-color: #1C5990 !important;
+    box-shadow: 0 7px 14px 0 #1c5a9080 !important;
+    color: #fff !important;
+    font-size: 1em !important;
+}
+.swal2-actions .swal2-cancel{
+    background-color: #f14b4b !important;
+    box-shadow: 0 7px 14px 0 rgba(241, 75, 75, 0.5) !important;
+}

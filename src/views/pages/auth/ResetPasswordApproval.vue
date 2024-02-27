@@ -1,4 +1,55 @@
 <script setup>
+import { useAuth } from '@/stores'
+import { onMounted, ref } from 'vue';
+import Swal from 'sweetalert2'
+const auth = useAuth();
+const listData = ref();
+
+const getResetPasswordList = async() =>{
+    const res = await auth.getResetPasswordList();
+    if(res?.success){
+        listData.value = res.data;
+    }
+}
+
+const submit = async(approveId, removeId) =>{
+    if(approveId){
+        const res = await auth.removeOrApprovePassword(approveId, removeId);
+        if(res.success){
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: "Request Successfully Approved",
+            });
+            getResetPasswordList();
+        }
+    }else{
+        Swal.fire({
+            icon: 'question',
+            title: 'Are You Sure Remove It ?',
+            text: "Do you want to continue  ? ",
+            showCancelButton: true,
+            confirmButtonText: 'Confirm',
+            cancelButtonText:'Cancel',
+        }).then((result)=>{
+            (async () => {
+                if (result.isConfirmed) {
+                    const res = await auth.removeOrApprovePassword(approveId, removeId);
+                    if (res.success) {
+                        Swal.fire('Confirmed!', 'Request Remove Success', 'success');
+                        getResetPasswordList();
+                    }
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire('Cancelled', 'You have clicked cancel', 'error');
+                }
+            })();
+        })
+    }
+}
+
+onMounted(() => {
+    getResetPasswordList();
+})  
 
 </script>
 
@@ -12,14 +63,15 @@
                 </div>
                 <div class="content-body">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-2" v-for="(data, index) in listData" :key="index">
                             <div class="card text-center">
-                                <img src="@/assets/images/logo/light-favicon.png" alt="">
-                                <h5>Shakibul Islam</h5>
-                                <p>Laravel Developer</p>
+                                <img :src="data.image" alt="" v-if="data.image">
+                                <img src="@/assets/images/logo/light-favicon.png" alt="" v-else>
+                                <h5>{{data.first_name}} {{ data.last_name }}</h5>
+                                <p>{{data.designation}}</p>
                                 <div class="approval-action d-flex justify-content-between">
-                                    <button class="btn-remove">Remove</button>
-                                    <button class="btn-approve">Approve</button>
+                                    <button class="btn-remove" @click="submit('' , data.id)">Remove</button>
+                                    <button class="btn-approve" @click="submit(data.id, '')">Approve</button>
                                 </div>
                             </div>
                         </div>
