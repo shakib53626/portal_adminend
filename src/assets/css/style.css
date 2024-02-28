@@ -93,3 +93,27 @@
     background-color: #f14b4b !important;
     box-shadow: 0 7px 14px 0 rgba(241, 75, 75, 0.5) !important;
 }
+
+.btn-add{
+    background-color: #1C5990;
+    color: #fff;
+    box-shadow: 0 7px 14px 0 rgba(5, 50, 148, 0.425);
+    border: none;
+}
+.btn-add:hover{
+    background-color: #116bb9;
+    color: #ffffff;
+}
+.body-area{
+    padding: 20px;
+}
+.page-title h4 {
+    margin-bottom: 0;
+    font-weight: 700;
+    color: #1C5990;
+}
+
+.page-title hr {
+    height: 3px;
+    color: #1C5990;
+}

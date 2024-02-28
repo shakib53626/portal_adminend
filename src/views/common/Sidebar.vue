@@ -30,16 +30,33 @@ const openToggle = (menuName) =>{
                     </router-link>
                 </li>
                 <li class="sub-menu-dropdown">
-                    <div class="dropdown-title mb-3" :class="{ 'dropdown-open': isOpenSubMenu == 'acl' || route.name == 'reset-password-approval' }" @click="openToggle('acl')">
+                    <div class="dropdown-title mb-3" :class="{ 'dropdown-open': isOpenSubMenu == 'acl' || 
+                            route.name == 'reset-password-approval' || 
+                            route.name == 'registration-approve' ||
+                            route.name == 'permission-list' ||
+                            route.name == 'permission-add'
+                    }" @click="openToggle('acl')">
                         <i class="fa-solid fa-people-roof nav-icon"></i> 
                         <span class="nav-title" v-if="!theme.isCollops">ACL Management</span>
                         <i class="fa-solid fa-angle-right toggle-icon"></i>
                     </div>
-                    <ul v-show="isOpenSubMenu=='acl' || route.name == 'reset-password-approval'">
+
+                    <ul v-show="isOpenSubMenu=='acl' || 
+                            route.name == 'reset-password-approval' || 
+                            route.name == 'registration-approve' ||
+                            route.name == 'permission-list' ||
+                            route.name == 'permission-add'
+                    ">
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
                                 <span class="nav-title" v-if="!theme.isCollops">Users</span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{ name: 'permission-list' }" :class="{ 'active': route.name == 'permission-list' || route.name == 'permission-add' }">
+                                <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
+                                <span class="nav-title" v-if="!theme.isCollops">User Permission</span>
                             </router-link>
                         </li>
                         <li>
@@ -49,7 +66,7 @@ const openToggle = (menuName) =>{
                             </router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'dashboard' }">
+                            <router-link :to="{ name: 'registration-approve' }" :class="{ 'active': route.name == 'registration-approve' }">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
                                 <span class="nav-title" v-if="!theme.isCollops">Approved Request</span>
                             </router-link>
