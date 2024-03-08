@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { usePermission, useNotification } from '@/stores'
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from 'pinia';
@@ -13,18 +13,30 @@ const displayName = ref('');
 const description = ref('');
 const errors      = ref('');
 
+const getSinglePermissionData = async() =>{
+    const res = await permission.getSinglePermissionData(route.params.id);
+    if(res?.success){
+        displayName.value = res.result?.display_name;
+        description.value = res.result?.description;
+    }
+}
+
 const submit = async() =>{
-    const res = await permission.permissionCreate({
+    const res = await permission.permissionUpdate(route.params.id, {
         display_name : displayName.value,
         description  : description.value
     });
     if(res?.success){
         router.push({name:'permission-list'});
-        notification.Success("Permission Created Successfully");
+        notification.Success("Permission Updated Successfully");
     }else{
         errors.value = res?.errors;
     }
 }
+
+onMounted(() => {
+    getSinglePermissionData();  
+})
 </script>
 
 <template>
@@ -62,7 +74,7 @@ const submit = async() =>{
                         <div class="col-md-12">
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-add" @click="submit" v-if="permission.loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading....</button>
-                                <button class="btn btn-add" @click="submit" v-else><i class="fa-solid fa-plus"></i> Add Permission </button>
+                                <button class="btn btn-add" @click="submit" v-else>Update Permission </button>
                             </div>
                         </div>
                     </div>

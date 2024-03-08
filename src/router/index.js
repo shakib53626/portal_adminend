@@ -12,6 +12,7 @@ import RegistrationApprov from '@/views/pages/auth/RegistrationApprov.vue'
 
 import PermissionsList from '@/views/pages/auth/permission/PermissionsList.vue'
 import PermissionAdd from '@/views/pages/auth/permission/PermissionAdd.vue' 
+import PermissionEdit from '@/views/pages/auth/permission/PermissionEdit.vue' 
 
 const routes =[	
     { 
@@ -67,6 +68,12 @@ const routes =[
       name: 'permission-add', 
       component: PermissionAdd,
       meta     : { title: 'Add A New Permission', requiresAuth : true }
+    },
+    { 
+      path: '/permission-edit/:id', 
+      name: 'permission-edit', 
+      component: PermissionEdit,
+      meta     : { title: 'Edit Permission', requiresAuth : true }
     },
   ];
 

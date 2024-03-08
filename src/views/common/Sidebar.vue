@@ -34,7 +34,8 @@ const openToggle = (menuName) =>{
                             route.name == 'reset-password-approval' || 
                             route.name == 'registration-approve' ||
                             route.name == 'permission-list' ||
-                            route.name == 'permission-add'
+                            route.name == 'permission-add' ||
+                            route.name == 'permission-edit'
                     }" @click="openToggle('acl')">
                         <i class="fa-solid fa-people-roof nav-icon"></i> 
                         <span class="nav-title" v-if="!theme.isCollops">ACL Management</span>
@@ -45,7 +46,8 @@ const openToggle = (menuName) =>{
                             route.name == 'reset-password-approval' || 
                             route.name == 'registration-approve' ||
                             route.name == 'permission-list' ||
-                            route.name == 'permission-add'
+                            route.name == 'permission-add' || 
+                            route.name == 'permission-edit'
                     ">
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
@@ -54,7 +56,7 @@ const openToggle = (menuName) =>{
                             </router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'permission-list' }" :class="{ 'active': route.name == 'permission-list' || route.name == 'permission-add' }">
+                            <router-link :to="{ name: 'permission-list' }" :class="{ 'active': route.name == 'permission-list' || route.name == 'permission-add' || route.name == 'permission-edit'}">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
                                 <span class="nav-title" v-if="!theme.isCollops">User Permission</span>
                             </router-link>

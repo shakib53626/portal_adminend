@@ -1,9 +1,23 @@
 <script setup>
+import { usePermission } from '@/stores'
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
+const permission = usePermission();
+const route      = useRoute();
 
-const route = useRoute();
+const permissions = ref('');
 
+const getPermissionsList = async() =>{
+    const res = await permission.getPermissionsList();
+    if(res?.success){
+        permissions.value = res?.result;
+    }
+}
+
+onMounted(() => {
+    getPermissionsList();  
+})
 </script>
 
 <template>
@@ -22,22 +36,31 @@ const route = useRoute();
                 </div>
                 <div class="content-body">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-12">
                             <div class="card text-center">
-                                <img src="@/assets/images/logo/light-favicon.png" alt="">
-                                <h5>Shakibul Islam</h5>
-                                <div>
-                                    <select id="" class="form-control mb-2 mt-2">
-                                        <option value="">Select Designation</option>
-                                    </select>
-                                    <select id="" class="form-control">
-                                        <option value="">Select Role</option>
-                                    </select>
-                                </div>
-                                <div class="approval-action d-flex justify-content-between">
-                                    <button class="btn-remove">Remove</button>
-                                    <button class="btn-approve">Approve</button>
-                                </div>
+                                <table class="table table-striped table-hover permission-table">
+                                    <thead>
+                                        <tr>
+                                            <th>SL</th>
+                                            <th>Display Name</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(value, index) in permissions?.data" :key="index">
+                                            <td>{{ index+1 }}</td>
+                                            <td>{{ value.display_name }}</td>
+                                            <td>{{ value.name }}</td>
+                                            <td>{{ value.description }}</td>
+                                            <td>
+                                                <router-link :to="{name:'permission-edit', params : {id: value.id}}" class="btn btn-approve btn-sm"><i class="fa-solid fa-pen-to-square"></i></router-link>
+                                                <a class="btn btn-remove btn-sm ms-2"><i class="fa-solid fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -95,6 +118,8 @@ const route = useRoute();
 .btn-remove {
     background-color: #f14b4b;
     box-shadow: 0 7px 14px 0 rgba(241, 75, 75, 0.5);
+    border: none;
+    color: #fff;
 }
 
 .btn-remove:hover {
@@ -104,9 +129,21 @@ const route = useRoute();
 .btn-approve {
     background-color: #1eca7b;
     box-shadow: 0 7px 14px 0 rgba(30, 202, 123, 0.5);
+    border: none;
+    color: #fff;
 }
 
 .btn-approve:hover {
     box-shadow: none;
+}
+.btn-sm{
+    font-size: 14px;
+    padding: 3px 10px;
+}
+.permission-table td{
+    color: #686868;
+}
+.permission-table th{
+    color: #1C5990;
 }
 </style>
