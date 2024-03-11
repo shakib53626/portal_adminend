@@ -15,6 +15,23 @@ export const usePermission = defineStore("psermission", {
             this.loading = true;
             try {
                 const res = await axiosInstance.get('/admin/permissions');
+                console.log(res);
+                if(res.data?.success){
+                    return res.data;
+                }
+            } catch (error) {
+                if(error.response?.data){
+                    return error.response?.data;
+                }
+            }finally{
+                this.loading = false;
+            }
+        },
+        
+        async getGroupPermissionsList(){
+            this.loading = true;
+            try {
+                const res = await axiosInstance.get('/admin/permissions/group');
                 if(res.data?.success){
                     return res.data;
                 }

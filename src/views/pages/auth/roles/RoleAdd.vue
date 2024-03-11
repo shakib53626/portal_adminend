@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { usePermission, useNotification } from '@/stores'
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from 'pinia';
@@ -9,9 +9,19 @@ const route        = useRoute();
 const permission   = usePermission();
 const notification = useNotification();
 
-const displayName = ref('');
-const description = ref('');
-const errors      = ref('');
+const displayName   = ref('');
+const description   = ref('');
+const errors        = ref('');
+const permissions   = ref('');
+const permissionIds = ref([]);
+const checked       = ref([]);
+
+const getPermissionsList = async() =>{
+    const res = await permission.getGroupPermissionsList();
+    if(res?.success){
+        permissions.value = res?.result;
+    }
+}
 
 const submit = async() =>{
     const res = await permission.permissionCreate({
@@ -25,6 +35,47 @@ const submit = async() =>{
         errors.value = res?.errors;
     }
 }
+
+const filterPermissionsByGroup = (permission) => {
+    const groupName = permission[0]?.name || '';
+    const parts = groupName.split('-');
+    return parts.length > 0 ? parts[0] : '';
+};
+
+const checkedPermission = (index) =>{
+    const selectedPermissions = permissions.value[index] || [];
+    // Toggle checked state and update permission_ids
+    let isDataHere = false;
+    selectedPermissions.forEach(data => {
+        const permissionId = data.id;
+        const permissionIndex = permissionIds.value.indexOf(permissionId);
+        if (permissionIndex !== -1) {
+            isDataHere = true;
+        }
+    });
+    if(isDataHere){
+        selectedPermissions.forEach(data => {
+            const permissionId = data.id;
+            const permissionIndex = permissionIds.value.indexOf(permissionId);
+            if (permissionIndex !== -1) {
+                permissionIds.value.splice(permissionIndex, 1);
+            }
+        });
+    }else{
+        selectedPermissions.forEach(data => {
+            const permissionId = data.id;
+            permissionIds.value.push(permissionId);
+        });
+    }
+}
+
+const isChecked = (index, id) =>{
+    
+}
+
+onMounted(() => {
+    getPermissionsList();  
+})
 </script>
 
 <template>
@@ -43,10 +94,10 @@ const submit = async() =>{
                     <hr>
                 </div>
             </div>
-            <div class="col-md-12 add-permission-area">
+            <div class="col-md-12 add-role-area">
                 <div class="card p-0">
                     <div class="row p-4">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group mb-4">
                                 <label for="display_name">Display Name</label>
                                 <input type="text" id="display_name" placeholder="Display Name" class="form-control" v-model="displayName">
@@ -54,9 +105,32 @@ const submit = async() =>{
                                     <span class="text-danger" v-for="(error, index) in errors?.display_name" :key="index">{{ error }}</span>
                                 </span>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group mb-4">
                                 <label for="description">Description</label>
-                                <textarea id="description" rows="3" placeholder="Write Description" class="form-control" v-model="description"></textarea>
+                                <textarea id="description" rows="1" placeholder="Write Description" class="form-control" v-model="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="permission">Permissions {{ permissionIds }} {{ checked }}</label>
+                                <div class="row">
+                                    <div class="col-md-4 p-4" v-for="(permission, index) in permissions" :key="index">
+                                        <div class="row permission-box p-2">
+                                            <div class="col-md-6 d-flex align-items-center">
+                                                <input type="checkbox" :id="filterPermissionsByGroup(permission)" @click="checkedPermission(index)" v-model="checked[index]" class="me-2"> <label :for="filterPermissionsByGroup(permission)">{{ filterPermissionsByGroup(permission) }}</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div v-for="(data, index2) in permission" :key="index2">
+                                                    <div class="">
+                                                        <input type="checkbox" :id="data.name" :value="data.id" v-model="permissionIds" @click="isChecked(index, data.id)"> <label :for="data.name">{{ data.name }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -72,19 +146,19 @@ const submit = async() =>{
     </div>
 </template>
 <style scoped>
-.add-permission-area{
+.add-role-area{
     width: 100%;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
-.add-permission-area .card{
-    width: 500px;
+.add-role-area .card{
+    width: 100%;
 }
 .form-group label{
     font-weight: 700;
     margin-bottom: 5px;
+}
+.permission-box{
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
 }
 
 </style>

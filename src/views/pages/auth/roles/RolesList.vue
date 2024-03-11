@@ -28,7 +28,7 @@ onMounted(() => {
                     <div class="d-flex justify-content-between align-items-center">
                         <h4>{{route.meta?.title}}</h4>
                         <div>
-                            <router-link :to="{name: 'permission-add'}" class="btn btn-add"><i class="fa-solid fa-plus"></i> Add</router-link>
+                            <router-link :to="{name: 'role-add'}" class="btn btn-add"><i class="fa-solid fa-plus"></i> Add</router-link>
                             <router-link :to="{name: 'dashboard'}" class="btn btn-add ms-2"><i class="fa-solid fa-arrow-left"></i> Back</router-link>
                         </div>
                     </div>

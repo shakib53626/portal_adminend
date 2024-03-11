@@ -36,7 +36,8 @@ const openToggle = (menuName) =>{
                             route.name == 'permission-list' ||
                             route.name == 'permission-add' ||
                             route.name == 'permission-edit' ||
-                            route.name == 'roles-list'
+                            route.name == 'roles-list' ||
+                            route.name == 'role-add'
                     }" @click="openToggle('acl')">
                         <i class="fa-solid fa-people-roof nav-icon"></i> 
                         <span class="nav-title" v-if="!theme.isCollops">ACL Management</span>
@@ -49,7 +50,8 @@ const openToggle = (menuName) =>{
                             route.name == 'permission-list' ||
                             route.name == 'permission-add' || 
                             route.name == 'permission-edit' ||
-                            route.name == 'roles-list'
+                            route.name == 'roles-list' ||
+                            route.name == 'role-add'
                     ">
                         <li>
                             <router-link :to="{ name: 'dashboard' }">
@@ -64,7 +66,7 @@ const openToggle = (menuName) =>{
                             </router-link>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'roles-list' }" :class="{'active': route.name == 'roles-list'}">
+                            <router-link :to="{ name: 'roles-list' }" :class="{'active': route.name == 'roles-list' || route.name == 'role-add'}">
                                 <i class="fa-solid fa-circle-half-stroke nav-icon"></i>
                                 <span class="nav-title" v-if="!theme.isCollops">User Roles</span>
                             </router-link>

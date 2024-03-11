@@ -63,6 +63,7 @@ const logout = async() =>{
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 3px 8px;
     transition: 0.5s;
+    z-index: 1001;
 }
 .header-left .fa-bars{
     font-weight: 900;
@@ -87,6 +88,7 @@ const logout = async() =>{
 .profile-logo{
     cursor: pointer;
     position: relative;
+    z-index: 1000;
 }
 .profile-logo img{
     background-color: #1C5990;
@@ -110,6 +112,7 @@ const logout = async() =>{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow: hidden;
     transition: 0.5s;
+    z-index: 1000;
 }
 .profile-logo:hover .profile-dropdown{
     height: 288px;

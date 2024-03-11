@@ -146,4 +146,5 @@ onMounted(() => {
 .permission-table th{
     color: #1C5990;
 }
+
 </style>
