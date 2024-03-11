@@ -69,9 +69,6 @@ const checkedPermission = (index) =>{
     }
 }
 
-const isChecked = (index, id) =>{
-    
-}
 
 onMounted(() => {
     getPermissionsList();  
@@ -114,17 +111,17 @@ onMounted(() => {
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="permission">Permissions {{ permissionIds }} {{ checked }}</label>
+                                <label for="permission">Permissions</label>
                                 <div class="row">
-                                    <div class="col-md-4 p-4" v-for="(permission, index) in permissions" :key="index">
+                                    <div class="col-md-3 p-4" v-for="(permission, index) in permissions" :key="index">
                                         <div class="row permission-box p-2">
-                                            <div class="col-md-6 d-flex align-items-center">
-                                                <input type="checkbox" :id="filterPermissionsByGroup(permission)" @click="checkedPermission(index)" v-model="checked[index]" class="me-2"> <label :for="filterPermissionsByGroup(permission)">{{ filterPermissionsByGroup(permission) }}</label>
+                                            <div class="col-md-4 d-flex align-items-center">
+                                                <button class="btn-approve" @click="checkedPermission(index)">All</button>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-8">
                                                 <div v-for="(data, index2) in permission" :key="index2">
                                                     <div class="">
-                                                        <input type="checkbox" :id="data.name" :value="data.id" v-model="permissionIds" @click="isChecked(index, data.id)"> <label :for="data.name">{{ data.name }}</label>
+                                                        <input type="checkbox" :id="data.name" :value="data.id" v-model="permissionIds"> <label :for="data.name">{{ data.name }}</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -160,5 +157,15 @@ onMounted(() => {
     border: 1px solid #e6e6e6;
     border-radius: 10px;
 }
-
+.btn-approve{
+    padding: 3px 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #1eca7b;
+    box-shadow: 0 7px 14px 0 rgba(30,202,123,0.5);
+}
+.btn-approve:hover{
+    box-shadow: none;
+}
 </style>
